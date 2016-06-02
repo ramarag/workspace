@@ -216,6 +216,37 @@ void BFS(IntNode* root)
 	que.Push(root);
 	BFS_Iterate(que);
 }
+int GetPivot(int start, int end) { return (start + end) / 2; }
+
+int partition(int* arr, int start, int end)
+{
+	int x = arr[start];
+	int j = start;
+	for (int i = start + 1; i <= end; i++)
+	{
+		if (arr[i] < x)
+		{
+			++j;
+			swap(arr[i], arr[j]);
+		}
+	}
+	swap(arr[start], arr[j]);
+
+		return j;
+
+}
+
+void Qsort(int* arr, int start, int end)
+{
+
+	if (start >= end) return;
+	int pivot = GetPivot(start, end);
+	swap(arr[pivot], arr[start]);
+	int m = partition(arr, start, end);
+
+		Qsort(arr, start, m - 1);
+	    Qsort(arr, m + 1, end);
+}
 int _tmain(int argc, _TCHAR* argv[])
 {
 	int data[] = { 2, 1, 0, 5, 9, 11, 17 };
@@ -238,7 +269,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	//permuterecursive(string("abc"), list2);
 	//compare(list1, list2);
 	combination(string("abc"));
-	
+
+	int arr[] = { 8, 9, 6, 5, 4, 3, 2, 2, 1 };
+	Qsort(arr, 0, sizeof(arr) / sizeof(*arr)-1);
 
 	return 0;
 }
